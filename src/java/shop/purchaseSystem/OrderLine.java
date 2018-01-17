@@ -5,23 +5,20 @@ import shop.productSystem.Product;
 public class OrderLine {
     private int id;
     private Product product;
-    private int count;
+    private int quantity;
     private double price;
     private int orderId;
 
     public OrderLine() {
         id = 0;
         product = new Product();
-        count = 0;
+        quantity = 0;
         price = 0;
         orderId = 0;
     }
 
     public OrderLine(int orderId) {
-        id = 0;
-        product = new Product();
-        count = 0;
-        price = 0;
+        this();
         this.orderId = orderId;
     }
 
@@ -41,12 +38,12 @@ public class OrderLine {
         this.product = product;
     }
 
-    public int getCount() {
-        return count;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public double getPrice() {
@@ -58,8 +55,8 @@ public class OrderLine {
     }
 
     public boolean setPrice() {
-        if (product.getPrice() != 0 && count != 0) {
-            price = product.getPrice() * count;
+        if (product.getPrice() != 0 && quantity != 0) {
+            price = product.getPrice() * quantity;
             return true;
         } else return false;
     }

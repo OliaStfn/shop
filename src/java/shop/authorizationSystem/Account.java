@@ -1,11 +1,14 @@
 package shop.authorizationSystem;
 
+import java.time.LocalDateTime;
+
 public class Account {
     private int id;
     private String login;
     private String password;
     private String email;
     private String country;
+    private LocalDateTime created;
 
     public Account() {
         id=0;
@@ -13,6 +16,7 @@ public class Account {
         password="none";
         email="none";
         country="none";
+        created = LocalDateTime.now();
     }
 
     public int getId() {
@@ -53,5 +57,13 @@ public class Account {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 }

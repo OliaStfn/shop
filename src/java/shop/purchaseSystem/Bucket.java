@@ -7,18 +7,10 @@ import java.util.HashMap;
 public class Bucket {
     private int id;
     private HashMap<Product,Integer> lines;
-    private int customerId;
 
     public Bucket() {
         id=0;
         lines=new HashMap<>();
-        customerId=0;
-    }
-
-    public Bucket(int customerId) {
-        id=0;
-        lines=new HashMap<>();
-        this.customerId=customerId;
     }
 
     public int getId() {
@@ -35,13 +27,5 @@ public class Bucket {
 
     public void setLines(HashMap<Product, Integer> lines) {
         this.lines = lines;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
     }
 }

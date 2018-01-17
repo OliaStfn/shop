@@ -25,10 +25,10 @@ public class Order {
        }
     }
 
-    private void addLine(Product product, int count){
+    private void addLine(Product product, int quantity){
         OrderLine line = new OrderLine(id);
         line.setProduct(product);
-        line.setCount(count);
+        line.setQuantity(quantity);
         line.setPrice();
         lines.add(line);
         price+=line.getPrice();

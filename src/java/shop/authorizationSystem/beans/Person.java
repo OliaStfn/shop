@@ -1,8 +1,8 @@
-package shop.authorizationSystem;
+package shop.authorizationSystem.beans;
 
 import java.time.LocalDate;
 
-public class Person {
+public abstract class Person {
     private int id;
     private String name;
     private String surname;

@@ -1,9 +1,10 @@
-package shop.authorizationSystem;
+package shop.authorizationSystem.beans;
 
-import shop.productSystem.FavouriteList;
-import shop.purchaseSystem.Bucket;
+import shop.productSystem.beans.FavouriteList;
+import shop.purchaseSystem.beans.Bucket;
+import shop.sql.Identificator;
 
-public class Customer extends Person{
+public class Customer extends Person implements Identificator<Integer> {
     private Account account;
     private FavouriteList favouriteList;
     private Bucket bucket;

@@ -1,6 +1,6 @@
-package shop.purchaseSystem;
+package shop.purchaseSystem.beans;
 
-import shop.productSystem.Product;
+import shop.productSystem.beans.Product;
 
 public class OrderLine {
     private int id;

@@ -1,8 +1,10 @@
-package shop.authorizationSystem;
+package shop.authorizationSystem.beans;
+
+import shop.sql.Identificator;
 
 import java.time.LocalDateTime;
 
-public class Account {
+public class Account implements Identificator<Integer> {
     private int id;
     private String login;
     private String password;

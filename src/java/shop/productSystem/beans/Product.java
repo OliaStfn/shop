@@ -1,8 +1,10 @@
-package shop.productSystem;
+package shop.productSystem.beans;
+
+import shop.sql.Identificator;
 
 import java.time.Period;
 
-public class Product {
+public class Product implements Identificator<Integer> {
     private int id;
     private String name;
     private String description;

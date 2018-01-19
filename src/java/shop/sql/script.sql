@@ -1,14 +1,3 @@
--- MySQL Workbench Synchronization
--- Generated: 2018-01-15 23:41
--- Model: New Model
--- Version: 1.0
--- Project: Name of the project
--- Author: Олюнь
-
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
-
 CREATE TABLE IF NOT EXISTS `shop`.`Persons` (
   `person_id` INT(11) NOT NULL,
   `person_name` VARCHAR(45) NOT NULL,
@@ -223,8 +212,204 @@ CREATE TABLE IF NOT EXISTS `shop`.`Orders_to_products` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+ALTER TABLE `shop`.`Admins`
+DROP FOREIGN KEY `fk_Admins_Accounts1`,
+DROP FOREIGN KEY `fk_Admins_Persons1`;
 
+ALTER TABLE `shop`.`Customers`
+DROP FOREIGN KEY `fk_Customers_Accounts1`;
+
+ALTER TABLE `shop`.`Favourite_lists`
+DROP FOREIGN KEY `fk_Favourite_lists_Customers1`;
+
+ALTER TABLE `shop`.`Lists_to_products`
+DROP FOREIGN KEY `fk_Lists_to_products_Favourite_lists1`,
+DROP FOREIGN KEY `fk_Lists_to_products_Products1`;
+
+ALTER TABLE `shop`.`Order_lines`
+DROP FOREIGN KEY `fk_Order_lines_Orders1`;
+
+ALTER TABLE `shop`.`Orders`
+DROP FOREIGN KEY `fk_Orders_Order_states1`;
+
+ALTER TABLE `shop`.`Orders_to_products`
+DROP FOREIGN KEY `fk_Orders_to_products_Order_lines1`,
+DROP FOREIGN KEY `fk_Orders_to_products_Products1`;
+
+ALTER TABLE `shop`.`Persons`
+DROP FOREIGN KEY `fk_Persons_Person_states`;
+
+ALTER TABLE `shop`.`Products`
+DROP FOREIGN KEY `fk_Products_Categories1`;
+
+ALTER TABLE `shop`.`Admins`
+CHANGE COLUMN `Accounts_account_id` `account_id` INT(11) NOT NULL ,
+CHANGE COLUMN `Persons_person_id` `person_id` INT(11) NOT NULL ;
+
+ALTER TABLE `shop`.`Customers`
+CHANGE COLUMN `Accounts_account_id` `account_id` INT(11) NOT NULL ;
+
+ALTER TABLE `shop`.`Favourite_lists`
+CHANGE COLUMN `Customers_customer_id` `customer_id` INT(11) NOT NULL ;
+
+ALTER TABLE `shop`.`Lists_to_products`
+DROP COLUMN `Lists_to_productscol`,
+CHANGE COLUMN `Favourite_lists_list_id` `list_id` INT(11) NOT NULL ,
+CHANGE COLUMN `Products_product_id` `product_id` INT(11) NOT NULL ;
+
+ALTER TABLE `shop`.`Order_lines`
+CHANGE COLUMN `Orders_order_id` `order_id` INT(11) NOT NULL ;
+
+ALTER TABLE `shop`.`Orders`
+CHANGE COLUMN `Order_states_state_id` `state_id` INT(11) NOT NULL ;
+
+ALTER TABLE `shop`.`Orders_to_products`
+CHANGE COLUMN `Order_lines_line_id` `line_id` INT(11) NOT NULL ,
+CHANGE COLUMN `Products_product_id` `product_id` INT(11) NOT NULL ;
+
+ALTER TABLE `shop`.`Persons`
+CHANGE COLUMN `Person_states_state_id` `state_id` INT(11) NOT NULL ;
+
+ALTER TABLE `shop`.`Products`
+CHANGE COLUMN `Categories_category_id` `category_id` INT(11) NOT NULL ;
+
+CREATE TABLE IF NOT EXISTS `shop`.`Warranties` (
+  `warranty_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `warranty_start` DATE NOT NULL,
+  `warranty_expiry` DATE NOT NULL,
+  PRIMARY KEY (`warranty_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `shop`.`Sale_lines` (
+  `line_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `product_quantity` INT(11) NOT NULL,
+  `line_price` DOUBLE NOT NULL,
+  `product_id` INT(11) NOT NULL,
+  `warranty_id` INT(11) NOT NULL,
+  `sale_id` INT(11) NOT NULL,
+  PRIMARY KEY (`line_id`),
+  INDEX `fk_Sale_lines_Products1_idx` (`product_id` ASC),
+  INDEX `fk_Sale_lines_Warranties1_idx` (`warranty_id` ASC),
+  INDEX `fk_Sale_lines_Sales1_idx` (`sale_id` ASC),
+  CONSTRAINT `fk_Sale_lines_Products1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `shop`.`Products` (`product_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Sale_lines_Warranties1`
+    FOREIGN KEY (`warranty_id`)
+    REFERENCES `shop`.`Warranties` (`warranty_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Sale_lines_Sales1`
+    FOREIGN KEY (`sale_id`)
+    REFERENCES `shop`.`Sales` (`sale_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `shop`.`Sales` (
+  `sale_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `sale_price` DOUBLE NOT NULL,
+  `createDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `customer_id` INT(11) NOT NULL,
+  `order_id` INT(11) NOT NULL,
+  PRIMARY KEY (`sale_id`),
+  INDEX `fk_Sales_Customers1_idx` (`customer_id` ASC),
+  INDEX `fk_Sales_Orders1_idx` (`order_id` ASC),
+  CONSTRAINT `fk_Sales_Customers1`
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `shop`.`Customers` (`customer_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Sales_Orders1`
+    FOREIGN KEY (`order_id`)
+    REFERENCES `shop`.`Orders` (`order_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+ALTER TABLE `shop`.`Admins`
+ADD CONSTRAINT `fk_Admins_Accounts1`
+  FOREIGN KEY (`account_id`)
+  REFERENCES `shop`.`Accounts` (`account_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_Admins_Persons1`
+  FOREIGN KEY (`person_id`)
+  REFERENCES `shop`.`Persons` (`person_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `shop`.`Customers`
+ADD CONSTRAINT `fk_Customers_Accounts1`
+  FOREIGN KEY (`account_id`)
+  REFERENCES `shop`.`Accounts` (`account_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `shop`.`Favourite_lists`
+ADD CONSTRAINT `fk_Favourite_lists_Customers1`
+  FOREIGN KEY (`customer_id`)
+  REFERENCES `shop`.`Customers` (`customer_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `shop`.`Lists_to_products`
+ADD CONSTRAINT `fk_Lists_to_products_Favourite_lists1`
+  FOREIGN KEY (`list_id`)
+  REFERENCES `shop`.`Favourite_lists` (`list_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_Lists_to_products_Products1`
+  FOREIGN KEY (`product_id`)
+  REFERENCES `shop`.`Products` (`product_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `shop`.`Order_lines`
+ADD CONSTRAINT `fk_Order_lines_Orders1`
+  FOREIGN KEY (`order_id`)
+  REFERENCES `shop`.`Orders` (`order_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `shop`.`Orders`
+ADD CONSTRAINT `fk_Orders_Order_states1`
+  FOREIGN KEY (`state_id`)
+  REFERENCES `shop`.`Order_states` (`state_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `shop`.`Orders_to_products`
+ADD CONSTRAINT `fk_Orders_to_products_Order_lines1`
+  FOREIGN KEY (`line_id`)
+  REFERENCES `shop`.`Order_lines` (`line_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_Orders_to_products_Products1`
+  FOREIGN KEY (`product_id`)
+  REFERENCES `shop`.`Products` (`product_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `shop`.`Persons`
+ADD CONSTRAINT `fk_Persons_Person_states`
+  FOREIGN KEY (`state_id`)
+  REFERENCES `shop`.`Person_states` (`state_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `shop`.`Products`
+ADD CONSTRAINT `fk_Products_Categories1`
+  FOREIGN KEY (`category_id`)
+  REFERENCES `shop`.`Categories` (`category_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;

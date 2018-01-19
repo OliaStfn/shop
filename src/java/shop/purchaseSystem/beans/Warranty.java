@@ -1,9 +1,11 @@
-package shop.purchaseSystem;
+package shop.purchaseSystem.beans;
+
+import shop.sql.Identificator;
 
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Warranty {
+public class Warranty implements Identificator<Integer> {
     private int id;
     private LocalDate start;
     private LocalDate expiry;

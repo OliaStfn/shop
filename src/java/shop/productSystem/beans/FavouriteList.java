@@ -1,4 +1,4 @@
-package shop.productSystem;
+package shop.productSystem.beans;
 
 import java.util.HashSet;
 

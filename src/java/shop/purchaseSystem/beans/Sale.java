@@ -1,13 +1,15 @@
-package shop.purchaseSystem;
+package shop.purchaseSystem.beans;
+
+import shop.sql.Identificator;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 
-public class Sale {
+public class Sale implements Identificator<Integer> {
     private int id;
     private HashSet<SaleLine> lines;
     private double price;
-    private LocalDateTime date;
+    private LocalDateTime createDate;
     private int orderId;
     private int customerId;
 
@@ -15,7 +17,7 @@ public class Sale {
         id = 0;
         lines = new HashSet<>();
         price=0;
-        date=LocalDateTime.now();
+        createDate =LocalDateTime.now();
         orderId=0;
         customerId=0;
     }
@@ -44,12 +46,12 @@ public class Sale {
         this.price = price;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getCreateDate() {
+        return createDate;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
     }
 
     public int getOrderId() {

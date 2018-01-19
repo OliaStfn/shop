@@ -1,12 +1,13 @@
-package shop.purchaseSystem;
+package shop.purchaseSystem.beans;
 
-import shop.productSystem.Product;
+import shop.productSystem.beans.Product;
+import shop.sql.Identificator;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
-public class Order {
+public class Order implements Identificator<Integer> {
     private int id;
     private HashSet<OrderLine> lines;
     private double price;

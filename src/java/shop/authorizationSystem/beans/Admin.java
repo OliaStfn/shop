@@ -1,8 +1,10 @@
-package shop.authorizationSystem;
+package shop.authorizationSystem.beans;
+
+import shop.sql.Identificator;
 
 import java.time.LocalDate;
 
-public class Admin extends Person{
+public class Admin extends Person implements Identificator<Integer> {
     private Account account;
     private LocalDate startWork;
 

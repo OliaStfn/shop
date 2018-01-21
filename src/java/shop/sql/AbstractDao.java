@@ -41,7 +41,7 @@ public abstract class AbstractDao<T extends Identificator<PK>, PK extends Intege
             log.error(e);
             throw new DaoException();
         }
-        query = getSelectQuery()+"(SELECT last_insert_id());";
+        query = getSelectQuery() + "(SELECT last_insert_id());";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             Collection<T> someList = parseResultSet(resultSet);
@@ -62,13 +62,13 @@ public abstract class AbstractDao<T extends Identificator<PK>, PK extends Intege
     public T read(PK key) throws DaoException {
         Connection connection = MySqlDaoFactory.getConnection();
         Collection<T> someList;
-        String query = getSelectQuery()+key+";";
+        String query = getSelectQuery() + key + ";";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             someList = parseResultSet(resultSet);
 
         } catch (Exception e) {
-            log.error(e+"Error with read database");
+            log.error(e + "Error with read database");
             throw new DaoException();
         }
         if (someList == null || someList.size() == 0) {
@@ -101,7 +101,7 @@ public abstract class AbstractDao<T extends Identificator<PK>, PK extends Intege
         Connection connection = MySqlDaoFactory.getConnection();
         String query = getDeleteQuery();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setObject(1,obj.getId());
+            statement.setObject(1, obj.getId());
             int changedFields = statement.executeUpdate();
             if (changedFields != 1) throw new DaoException("During query deleted more than 1 field: " + changedFields);
         } catch (Exception e) {
@@ -119,7 +119,7 @@ public abstract class AbstractDao<T extends Identificator<PK>, PK extends Intege
             ResultSet resultSet = statement.executeQuery();
             someList = parseResultSet(resultSet);
         } catch (Exception e) {
-            log.error(e+"Error with read databases");
+            log.error(e + "Error with read databases");
             throw new DaoException();
         }
         return someList;

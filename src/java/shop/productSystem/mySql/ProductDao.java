@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Collection;
 
-public class ProductDao  extends AbstractDao<Product,Integer> {
+public class ProductDao extends AbstractDao<Product, Integer> {
     @Override
     public String getCreateQuery() {
         return null;

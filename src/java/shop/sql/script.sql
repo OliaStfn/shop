@@ -413,3 +413,315 @@ ADD CONSTRAINT `fk_Products_Categories1`
   REFERENCES `shop`.`Categories` (`category_id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+
+ALTER TABLE `shop`.`Accounts`
+CHANGE COLUMN `account_created` `account_created` TIMESTAMP NOT NULL DEFAULT DEFAULT CURRENT_TIMESTAMP ;
+
+ALTER TABLE `shop`.`Admins`
+CHANGE COLUMN `start_work` `start_work` TIMESTAMP NOT NULL DEFAULT DEFAULT CURRENT_TIMESTAMP ;
+
+ALTER TABLE `shop`.`Favourite_lists`
+ADD COLUMN `updated` TIMESTAMP NOT NULL DEFAULT 'DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP' AFTER `customer_id`;
+
+ALTER TABLE `shop`.`Orders`
+ADD COLUMN `order_created` TIMESTAMP NOT NULL DEFAULT DEFAULT CURRENT_TIMESTAMP AFTER `order_price`;
+
+ALTER TABLE `shop`.`Persons`
+CHANGE COLUMN `person_born_date` `person_born_date` TIMESTAMP NOT NULL DEFAULT DEFAULT CURRENT_TIMESTAMP ,
+ADD COLUMN `information_updated` TIMESTAMP NOT NULL DEFAULT DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `person_born_date`;
+
+ALTER TABLE `shop`.`Sales`
+CHANGE COLUMN `createDate` `createDate` TIMESTAMP NOT NULL DEFAULT DEFAULT CURRENT_TIMESTAMP ;
+
+CREATE TABLE IF NOT EXISTS `shop`.`Phones` (
+  `phone_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `phone_model` VARCHAR(45) NOT NULL,
+  `phone_CPU` VARCHAR(45) NOT NULL,
+  `phone_RAM` VARCHAR(45) NOT NULL,
+  `phone_ROM` VARCHAR(45) NOT NULL,
+  `phone_battery` VARCHAR(45) NOT NULL,
+  `phone_screen_size` DOUBLE NOT NULL,
+  `phone_colour` VARCHAR(45) NOT NULL,
+  `phone_video_adapter` VARCHAR(45) NOT NULL,
+  `phone_complete_set` VARCHAR(45) NOT NULL,
+  `phone_dimensions` VARCHAR(45) NOT NULL,
+  `system_id` INT(11) NOT NULL,
+  `product_id` INT(11) NOT NULL,
+  PRIMARY KEY (`phone_id`),
+  INDEX `fk_Phones_Operation_Systems1_idx` (`system_id` ASC),
+  INDEX `fk_Phones_Products1_idx` (`product_id` ASC),
+  CONSTRAINT `fk_Phones_Operation_Systems1`
+    FOREIGN KEY (`system_id`)
+    REFERENCES `shop`.`Operation_Systems` (`system_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Phones_Products1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `shop`.`Products` (`product_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `shop`.`Laptops` (
+  `laptop_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `laptop_model` VARCHAR(45) NOT NULL,
+  `laptop_CPU` VARCHAR(45) NOT NULL,
+  `laptop_RAM` VARCHAR(45) NOT NULL,
+  `laptop_ROM` VARCHAR(45) NOT NULL,
+  `laptop_battery` VARCHAR(45) NOT NULL,
+  `laptop_screen_size` DOUBLE NOT NULL,
+  `laptop_colour` VARCHAR(45) NOT NULL,
+  `laptop_video_adapter` VARCHAR(45) NOT NULL,
+  `laptop_complete_set` VARCHAR(45) NOT NULL,
+  `laptop_dimensions` VARCHAR(45) NOT NULL,
+  `system_id` INT(11) NOT NULL,
+  `product_id` INT(11) NOT NULL,
+  PRIMARY KEY (`laptop_id`),
+  INDEX `fk_Laptops_Operation_Systems1_idx` (`system_id` ASC),
+  INDEX `fk_Laptops_Products1_idx` (`product_id` ASC),
+  CONSTRAINT `fk_Laptops_Operation_Systems1`
+    FOREIGN KEY (`system_id`)
+    REFERENCES `shop`.`Operation_Systems` (`system_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Laptops_Products1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `shop`.`Products` (`product_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `shop`.`TV` (
+  `tv_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `tv_model` VARCHAR(45) NOT NULL,
+  `tv_battery` VARCHAR(45) NOT NULL,
+  `tv_screen_size` DOUBLE NOT NULL,
+  `tv_colour` VARCHAR(45) NOT NULL,
+  `tv_complete_set` VARCHAR(45) NOT NULL,
+  `tv_dimensions` VARCHAR(45) NOT NULL,
+  `product_id` INT(11) NOT NULL,
+  PRIMARY KEY (`tv_id`),
+  INDEX `fk_TV_Products1_idx` (`product_id` ASC),
+  CONSTRAINT `fk_TV_Products1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `shop`.`Products` (`product_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `shop`.`Operation_Systems` (
+  `system_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `system_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`system_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+
+ALTER TABLE `shop`.`Admins`
+CHANGE COLUMN `start_work` `start_work` TIMESTAMP NOT NULL DEFAULT DEFAULT CURRENT_TIMESTAMP ;
+
+ALTER TABLE `shop`.`Favourite_lists`
+ADD COLUMN `updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `customer_id`;
+
+ALTER TABLE `shop`.`Orders`
+ADD COLUMN `order_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `order_price`;
+
+ALTER TABLE `shop`.`Persons`
+ADD COLUMN `information_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `person_born_date`;
+
+CREATE TABLE IF NOT EXISTS `shop`.`Phones` (
+  `phone_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `phone_model` VARCHAR(45) NOT NULL,
+  `phone_CPU` VARCHAR(45) NOT NULL,
+  `phone_RAM` VARCHAR(45) NOT NULL,
+  `phone_ROM` VARCHAR(45) NOT NULL,
+  `phone_battery` VARCHAR(45) NOT NULL,
+  `phone_screen_size` DOUBLE NOT NULL,
+  `phone_colour` VARCHAR(45) NOT NULL,
+  `phone_video_adapter` VARCHAR(45) NOT NULL,
+  `phone_complete_set` VARCHAR(45) NOT NULL,
+  `phone_dimensions` VARCHAR(45) NOT NULL,
+  `system_id` INT(11) NOT NULL,
+  `product_id` INT(11) NOT NULL,
+  PRIMARY KEY (`phone_id`),
+  INDEX `fk_Phones_Operation_Systems1_idx` (`system_id` ASC),
+  INDEX `fk_Phones_Products1_idx` (`product_id` ASC),
+  CONSTRAINT `fk_Phones_Operation_Systems1`
+    FOREIGN KEY (`system_id`)
+    REFERENCES `shop`.`Operation_Systems` (`system_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Phones_Products1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `shop`.`Products` (`product_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `shop`.`Laptops` (
+  `laptop_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `laptop_model` VARCHAR(45) NOT NULL,
+  `laptop_CPU` VARCHAR(45) NOT NULL,
+  `laptop_RAM` VARCHAR(45) NOT NULL,
+  `laptop_ROM` VARCHAR(45) NOT NULL,
+  `laptop_battery` VARCHAR(45) NOT NULL,
+  `laptop_screen_size` DOUBLE NOT NULL,
+  `laptop_colour` VARCHAR(45) NOT NULL,
+  `laptop_video_adapter` VARCHAR(45) NOT NULL,
+  `laptop_complete_set` VARCHAR(45) NOT NULL,
+  `laptop_dimensions` VARCHAR(45) NOT NULL,
+  `system_id` INT(11) NOT NULL,
+  `product_id` INT(11) NOT NULL,
+  PRIMARY KEY (`laptop_id`),
+  INDEX `fk_Laptops_Operation_Systems1_idx` (`system_id` ASC),
+  INDEX `fk_Laptops_Products1_idx` (`product_id` ASC),
+  CONSTRAINT `fk_Laptops_Operation_Systems1`
+    FOREIGN KEY (`system_id`)
+    REFERENCES `shop`.`Operation_Systems` (`system_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Laptops_Products1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `shop`.`Products` (`product_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `shop`.`TV` (
+  `tv_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `tv_model` VARCHAR(45) NOT NULL,
+  `tv_battery` VARCHAR(45) NOT NULL,
+  `tv_screen_size` DOUBLE NOT NULL,
+  `tv_colour` VARCHAR(45) NOT NULL,
+  `tv_complete_set` VARCHAR(45) NOT NULL,
+  `tv_dimensions` VARCHAR(45) NOT NULL,
+  `product_id` INT(11) NOT NULL,
+  PRIMARY KEY (`tv_id`),
+  INDEX `fk_TV_Products1_idx` (`product_id` ASC),
+  CONSTRAINT `fk_TV_Products1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `shop`.`Products` (`product_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `shop`.`Operation_Systems` (
+  `system_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `system_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`system_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+
+
+
+
+
+
+
+ALTER TABLE `shop`.`Orders`
+ADD COLUMN `order_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `order_price`;
+
+ALTER TABLE `shop`.`Persons`
+ADD COLUMN `information_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `person_born_date`;
+
+CREATE TABLE IF NOT EXISTS `shop`.`Phones` (
+  `phone_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `phone_model` VARCHAR(45) NOT NULL,
+  `phone_CPU` VARCHAR(45) NOT NULL,
+  `phone_RAM` VARCHAR(45) NOT NULL,
+  `phone_ROM` VARCHAR(45) NOT NULL,
+  `phone_battery` VARCHAR(45) NOT NULL,
+  `phone_screen_size` DOUBLE NOT NULL,
+  `phone_colour` VARCHAR(45) NOT NULL,
+  `phone_video_adapter` VARCHAR(45) NOT NULL,
+  `phone_complete_set` VARCHAR(45) NOT NULL,
+  `phone_dimensions` VARCHAR(45) NOT NULL,
+  `system_id` INT(11) NOT NULL,
+  `product_id` INT(11) NOT NULL,
+  PRIMARY KEY (`phone_id`),
+  INDEX `fk_Phones_Operation_Systems1_idx` (`system_id` ASC),
+  INDEX `fk_Phones_Products1_idx` (`product_id` ASC),
+  CONSTRAINT `fk_Phones_Operation_Systems1`
+    FOREIGN KEY (`system_id`)
+    REFERENCES `shop`.`Operation_Systems` (`system_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Phones_Products1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `shop`.`Products` (`product_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `shop`.`Laptops` (
+  `laptop_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `laptop_model` VARCHAR(45) NOT NULL,
+  `laptop_CPU` VARCHAR(45) NOT NULL,
+  `laptop_RAM` VARCHAR(45) NOT NULL,
+  `laptop_ROM` VARCHAR(45) NOT NULL,
+  `laptop_battery` VARCHAR(45) NOT NULL,
+  `laptop_screen_size` DOUBLE NOT NULL,
+  `laptop_colour` VARCHAR(45) NOT NULL,
+  `laptop_video_adapter` VARCHAR(45) NOT NULL,
+  `laptop_complete_set` VARCHAR(45) NOT NULL,
+  `laptop_dimensions` VARCHAR(45) NOT NULL,
+  `system_id` INT(11) NOT NULL,
+  `product_id` INT(11) NOT NULL,
+  PRIMARY KEY (`laptop_id`),
+  INDEX `fk_Laptops_Operation_Systems1_idx` (`system_id` ASC),
+  INDEX `fk_Laptops_Products1_idx` (`product_id` ASC),
+  CONSTRAINT `fk_Laptops_Operation_Systems1`
+    FOREIGN KEY (`system_id`)
+    REFERENCES `shop`.`Operation_Systems` (`system_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Laptops_Products1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `shop`.`Products` (`product_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `shop`.`TV` (
+  `tv_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `tv_model` VARCHAR(45) NOT NULL,
+  `tv_battery` VARCHAR(45) NOT NULL,
+  `tv_screen_size` DOUBLE NOT NULL,
+  `tv_colour` VARCHAR(45) NOT NULL,
+  `tv_complete_set` VARCHAR(45) NOT NULL,
+  `tv_dimensions` VARCHAR(45) NOT NULL,
+  `product_id` INT(11) NOT NULL,
+  PRIMARY KEY (`tv_id`),
+  INDEX `fk_TV_Products1_idx` (`product_id` ASC),
+  CONSTRAINT `fk_TV_Products1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `shop`.`Products` (`product_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `shop`.`Operation_Systems` (
+  `system_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `system_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`system_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;

@@ -11,9 +11,9 @@ public class Customer extends Person implements Identificator<Integer> {
 
     public Customer() {
         super();
-        account=new Account();
-        favouriteList=new FavouriteList();
-        bucket=new Bucket();
+        account = new Account();
+        favouriteList = new FavouriteList();
+        bucket = new Bucket();
     }
 
     public Account getAccount() {
